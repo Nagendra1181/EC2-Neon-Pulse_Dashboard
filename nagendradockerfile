@@ -1,0 +1,11 @@
+FROM python:3.15.0a2-alpine3.22
+ADD . /tmp/pythoncode
+WORKDIR /pythoncode
+RUN pip install --prefix=/aws -r requirment.txt
+
+FROM python:3.15.0a2-alpine3.22
+LABEL project=pythonproject
+LABEL author=nagendra
+COPY --from-=build /pythoncode/aws /nagendra
+EXPOSE 5001
+CMD ["python","app.py"]
